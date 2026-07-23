@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true
+
+  datasource:
+    url: "jdbc:postgresql://${POSTGRES_HOST:5.189.184.102}:${POSTGRES_PORT:5432}/${POSTGRES_DB:meal_db}"
+    username: ${POSTGRES_USER:root}
+    password: ${POSTGRES_PASSWORD:root2026}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      auto-commit: false
+
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+      continue-on-error: true
