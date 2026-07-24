@@ -2,6 +2,7 @@ package vunge.ao.meal.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import java.util.UUID;
 
 import java.math.BigDecimal;
 
@@ -12,5 +13,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class CategoryResponseDto{
-    private String title;
+    private UUID id;
+    private String description;
 }
