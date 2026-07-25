@@ -4,16 +4,18 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vunge.ao.meal.common.ApiResponse;
 import vunge.ao.meal.dto.CategoryRequestDto;
 import vunge.ao.meal.dto.CategoryResponseDto;
 import vunge.ao.meal.repository.CategoryRepository;
 import vunge.ao.meal.usecase.category.CreateCategoryUseCase;
+import vunge.ao.meal.usecase.category.FindAllCategoryUseCase;
 
 @RestController
 @RequestMapping("/categories")
@@ -21,6 +23,7 @@ import vunge.ao.meal.usecase.category.CreateCategoryUseCase;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CreateCategoryUseCase createCategoryUseCase;
+    private final FindAllCategoryUseCase findAllCategoryUseCase;
 
     @PostMapping
     @Operation(summary = "Create a new category", description = "Create a new category")
@@ -31,6 +34,25 @@ public class CategoryController {
         );
         return ResponseEntity.ok(ApiResponse.successData(response));
 
+    }
+
+    @GetMapping
+    @Operation(summary = "Find all documents", description = "Find all documents")
+    public ResponseEntity<ApiResponse<Page<CategoryResponseDto>>> findAll(
+
+            @RequestParam(defaultValue = "0") int pag,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String orderBy) {
+        Pageable pageable = PageRequest.of(pag, size, Sort.by(orderBy));
+        return ResponseEntity.ok(
+                ApiResponse.successData(
+                        findAllCategoryUseCase
+                                .execute(
+                                        new FindAllCategoryUseCase.Input(
+                                                pageable
+                                        )
+                                )
+                ));
     }
 
 }
