@@ -8,6 +8,7 @@ public record MealRequestDto(
         @NotNull String title,
         @NotNull String description,
         @NotNull String badge,
-        @NotNull BigDecimal price
+        @NotNull BigDecimal price,
+        String details
 ) {
 }
