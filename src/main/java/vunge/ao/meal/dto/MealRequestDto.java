@@ -12,6 +12,6 @@ public record MealRequestDto(
         @NotNull String badge,
         @NotNull BigDecimal price,
         String details,
-        UUID categoryId
+        @NotNull  UUID categoryId
 ) {
 }

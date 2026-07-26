@@ -14,6 +14,7 @@ import java.util.UUID;
 public class MealResponseDto {
     private UUID id;
     private String title;
+    private String badge;
     private String description;
     private BigDecimal price;
     private String details;

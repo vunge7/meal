@@ -21,6 +21,7 @@ public class BuilderMethods {
                 .description(meal.getDescription())
                 .price(meal.getPrice())
                 .details(meal.getDetails())
+                .badge(meal.getBadge())
                 .categoryId(meal.getCategory().getId())
                 .build();
     }

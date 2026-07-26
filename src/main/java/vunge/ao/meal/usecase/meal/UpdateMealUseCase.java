@@ -66,6 +66,7 @@ public class UpdateMealUseCase implements Execute<MealResponseDto, UpdateMealUse
     private void updateMealFields(Meal meal, Category category, MealRequestDto request) {
         meal.setTitle(request.title());
         meal.setDescription(request.description());
+        meal.setBadge(request.badge());
         meal.setPrice(request.price());
         meal.setDetails(request.details());
 

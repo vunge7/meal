@@ -21,6 +21,7 @@ import vunge.ao.meal.usecase.category.DeleteCategoryUseCase;
 import vunge.ao.meal.usecase.category.FindAllCategoryUseCase;
 import vunge.ao.meal.usecase.category.FindByIdCategoryUseCase;
 import vunge.ao.meal.usecase.meal.CreateMealUseCase;
+import vunge.ao.meal.usecase.meal.FindAllMealUseCase;
 import vunge.ao.meal.usecase.meal.UpdateMealUseCase;
 
 import java.util.UUID;
@@ -32,6 +33,7 @@ import java.util.UUID;
 public class MealController {
     private final CreateMealUseCase createMealUseCase;
     private final UpdateMealUseCase updateMealUseCase;
+    private final FindAllMealUseCase findAllMealUseCase;
 
     @PostMapping
     @Operation(summary = "Create a new meal", description = "Create a new meal")
@@ -54,6 +56,25 @@ public class MealController {
         );
         return ResponseEntity.ok(ApiResponse.successData(response));
 
+    }
+
+
+    @GetMapping
+    @Operation(summary = "Find all meals", description = "Find all meals")
+    public ResponseEntity<ApiResponse<Page<MealResponseDto>>> findAll(
+            @RequestParam(defaultValue = "0") int pag,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String orderBy) {
+        Pageable pageable = PageRequest.of(pag, size, Sort.by(orderBy));
+        return ResponseEntity.ok(
+                ApiResponse.successData(
+                        findAllMealUseCase
+                                .execute(
+                                        new FindAllMealUseCase.Input(
+                                                pageable
+                                        )
+                                )
+                ));
     }
 
 
