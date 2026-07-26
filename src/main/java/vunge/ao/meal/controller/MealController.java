@@ -22,6 +22,7 @@ import vunge.ao.meal.usecase.category.FindAllCategoryUseCase;
 import vunge.ao.meal.usecase.category.FindByIdCategoryUseCase;
 import vunge.ao.meal.usecase.meal.CreateMealUseCase;
 import vunge.ao.meal.usecase.meal.FindAllMealUseCase;
+import vunge.ao.meal.usecase.meal.FindByIdMealUseCase;
 import vunge.ao.meal.usecase.meal.UpdateMealUseCase;
 
 import java.util.UUID;
@@ -34,6 +35,7 @@ public class MealController {
     private final CreateMealUseCase createMealUseCase;
     private final UpdateMealUseCase updateMealUseCase;
     private final FindAllMealUseCase findAllMealUseCase;
+    private final FindByIdMealUseCase findByIdMealUseCase;
 
     @PostMapping
     @Operation(summary = "Create a new meal", description = "Create a new meal")
@@ -72,6 +74,20 @@ public class MealController {
                                 .execute(
                                         new FindAllMealUseCase.Input(
                                                 pageable
+                                        )
+                                )
+                ));
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Find by id meal", description = "Find by id meal")
+    public ResponseEntity<ApiResponse<MealResponseDto>> findById(UUID id) {
+        return ResponseEntity.ok(
+                ApiResponse.successData(
+                        findByIdMealUseCase
+                                .execute(
+                                        new FindByIdMealUseCase.Input(
+                                                id
                                         )
                                 )
                 ));
