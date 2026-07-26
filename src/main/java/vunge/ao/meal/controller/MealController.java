@@ -21,6 +21,7 @@ import vunge.ao.meal.usecase.category.DeleteCategoryUseCase;
 import vunge.ao.meal.usecase.category.FindAllCategoryUseCase;
 import vunge.ao.meal.usecase.category.FindByIdCategoryUseCase;
 import vunge.ao.meal.usecase.meal.CreateMealUseCase;
+import vunge.ao.meal.usecase.meal.UpdateMealUseCase;
 
 import java.util.UUID;
 
@@ -30,6 +31,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MealController {
     private final CreateMealUseCase createMealUseCase;
+    private final UpdateMealUseCase updateMealUseCase;
 
     @PostMapping
     @Operation(summary = "Create a new meal", description = "Create a new meal")
@@ -37,6 +39,18 @@ public class MealController {
             @Valid @RequestBody MealRequestDto request) {
         var response = createMealUseCase.execute(
                 new CreateMealUseCase.Input(request)
+        );
+        return ResponseEntity.ok(ApiResponse.successData(response));
+
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Create a new meal", description = "Create a new meal")
+    public ResponseEntity<ApiResponse<MealResponseDto>> updateMeal(
+            @PathVariable UUID id,
+            @Valid @RequestBody MealRequestDto request) {
+        var response = updateMealUseCase.execute(
+                new UpdateMealUseCase.Input(id, request)
         );
         return ResponseEntity.ok(ApiResponse.successData(response));
 

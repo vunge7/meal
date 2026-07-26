@@ -12,6 +12,7 @@ import java.util.UUID;
 public interface MealRepository extends JpaRepository<Meal, UUID>, JpaSpecificationExecutor<Meal> {
 
     boolean existsByTitle(String title);
+    boolean existsByTitleAndIdNot(String title, UUID id);
     Page<Meal> findMealsByDeletedFalse(Pageable pageable);
 
 
