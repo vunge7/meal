@@ -1,10 +1,9 @@
 package vunge.ao.meal.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import java.util.UUID;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 
 @Getter
@@ -12,8 +11,12 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryResponseDto{
+public class MealResponseDto {
     private UUID id;
+    private String title;
+    private String badge;
     private String description;
-
+    private BigDecimal price;
+    private String details;
+    private UUID categoryId;
 }

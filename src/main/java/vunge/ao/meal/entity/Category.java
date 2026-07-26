@@ -26,11 +26,11 @@ public class Category extends GenericValuesEntity {
     private List<Meal> meals = new ArrayList<>();
 
 
-    private void addMeal(Meal meal) {
+    public void addMeal(Meal meal) {
         meals.add(meal);
         meal.setCategory(this);
     }
-    private void removeMeal(Meal meal) {
+    public void removeMeal(Meal meal) {
         meals.remove(meal);
         meal.setCategory(null);
     }
