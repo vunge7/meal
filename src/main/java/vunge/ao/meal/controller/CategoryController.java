@@ -15,6 +15,7 @@ import vunge.ao.meal.dto.CategoryRequestDto;
 import vunge.ao.meal.dto.CategoryResponseDto;
 import vunge.ao.meal.repository.CategoryRepository;
 import vunge.ao.meal.usecase.category.CreateCategoryUseCase;
+import vunge.ao.meal.usecase.category.DeleteCategoryUseCase;
 import vunge.ao.meal.usecase.category.FindAllCategoryUseCase;
 import vunge.ao.meal.usecase.category.FindByIdCategoryUseCase;
 
@@ -28,6 +29,7 @@ public class CategoryController {
     private final CreateCategoryUseCase createCategoryUseCase;
     private final FindAllCategoryUseCase findAllCategoryUseCase;
     private final FindByIdCategoryUseCase findByIdCategoryUseCase;
+    private final DeleteCategoryUseCase deleteCategoryUseCase;
 
 
     @PostMapping
@@ -61,7 +63,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Find by id category", description = "Find all categories")
+    @Operation(summary = "Find by id category", description = "Find by id category")
     public ResponseEntity<ApiResponse<CategoryResponseDto>> findById(UUID id) {
         return ResponseEntity.ok(
                 ApiResponse.successData(
@@ -74,4 +76,17 @@ public class CategoryController {
                 ));
     }
 
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Deleted by id category", description = "Delete by category")
+    public ResponseEntity<ApiResponse<String>> deleteById(UUID id) {
+        return ResponseEntity.ok(
+                ApiResponse.successData(
+                        deleteCategoryUseCase
+                                .execute(
+                                        new DeleteCategoryUseCase.Input(
+                                                id
+                                        )
+                                )
+                ));
+    }
 }

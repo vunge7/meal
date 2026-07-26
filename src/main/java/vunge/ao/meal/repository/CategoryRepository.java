@@ -16,6 +16,8 @@ public interface CategoryRepository extends JpaRepository<Category, UUID>, JpaSp
 
     boolean existsCategoriesByDescription(String description);
 
+    Page<Category> findCategoriesByDeletedFalse(Pageable pageable);
+
 
 
 
