@@ -15,7 +15,11 @@ import vunge.ao.meal.dto.CategoryRequestDto;
 import vunge.ao.meal.dto.CategoryResponseDto;
 import vunge.ao.meal.repository.CategoryRepository;
 import vunge.ao.meal.usecase.category.CreateCategoryUseCase;
+import vunge.ao.meal.usecase.category.DeleteCategoryUseCase;
 import vunge.ao.meal.usecase.category.FindAllCategoryUseCase;
+import vunge.ao.meal.usecase.category.FindByIdCategoryUseCase;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/categories")
@@ -24,6 +28,9 @@ import vunge.ao.meal.usecase.category.FindAllCategoryUseCase;
 public class CategoryController {
     private final CreateCategoryUseCase createCategoryUseCase;
     private final FindAllCategoryUseCase findAllCategoryUseCase;
+    private final FindByIdCategoryUseCase findByIdCategoryUseCase;
+    private final DeleteCategoryUseCase deleteCategoryUseCase;
+
 
     @PostMapping
     @Operation(summary = "Create a new category", description = "Create a new category")
@@ -37,7 +44,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    @Operation(summary = "Find all documents", description = "Find all documents")
+    @Operation(summary = "Find all categories", description = "Find all categories")
     public ResponseEntity<ApiResponse<Page<CategoryResponseDto>>> findAll(
 
             @RequestParam(defaultValue = "0") int pag,
@@ -55,4 +62,31 @@ public class CategoryController {
                 ));
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Find by id category", description = "Find by id category")
+    public ResponseEntity<ApiResponse<CategoryResponseDto>> findById(UUID id) {
+        return ResponseEntity.ok(
+                ApiResponse.successData(
+                        findByIdCategoryUseCase
+                                .execute(
+                                        new FindByIdCategoryUseCase.Input(
+                                                id
+                                        )
+                                )
+                ));
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Deleted by id category", description = "Delete by category")
+    public ResponseEntity<ApiResponse<String>> deleteById(UUID id) {
+        return ResponseEntity.ok(
+                ApiResponse.successData(
+                        deleteCategoryUseCase
+                                .execute(
+                                        new DeleteCategoryUseCase.Input(
+                                                id
+                                        )
+                                )
+                ));
+    }
 }

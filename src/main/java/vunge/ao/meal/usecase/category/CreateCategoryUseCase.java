@@ -32,7 +32,7 @@ public class CreateCategoryUseCase implements Execute<CategoryResponseDto, Creat
         validate(request);
         var response = repository.save(category);
         return BuilderMethods
-                .toCategoryResponseDto(response);
+                .toMealResponseDto(response);
     }
 
 

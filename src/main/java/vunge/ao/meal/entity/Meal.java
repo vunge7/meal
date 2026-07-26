@@ -25,6 +25,8 @@ public class Meal extends GenericValuesEntity {
     private String badge;
     @Column(name = "price", precision =  10, scale = 2)
     private BigDecimal price;
+    @Column(name = "details")
+    private String details;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
