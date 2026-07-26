@@ -17,4 +17,5 @@ public class MealResponseDto {
     private String description;
     private BigDecimal price;
     private String details;
+    private UUID categoryId;
 }

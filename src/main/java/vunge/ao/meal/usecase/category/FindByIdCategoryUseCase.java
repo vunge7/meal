@@ -29,7 +29,7 @@ public class FindByIdCategoryUseCase implements Execute<CategoryResponseDto, Fin
         var optical = repository.findById(input.id);
         if (optical.isPresent()) {
             return BuilderMethods
-                    .toCategoryResponseDto(optical.get());
+                    .toMealResponseDto(optical.get());
         }
         throw new CategoryException(Messages.NOT_EXIST_CATEGORY, HttpStatus.NOT_FOUND);
 

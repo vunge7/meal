@@ -24,7 +24,7 @@ public class FindAllCategoryUseCase implements Execute<Page<CategoryResponseDto>
     @Override
     public Page<CategoryResponseDto> execute(Input input) {
         var categories = repository.findAll(input.pageable);
-        return categories.map(BuilderMethods::toCategoryResponseDto);
+        return categories.map(BuilderMethods::toMealResponseDto);
     }
 
 }
